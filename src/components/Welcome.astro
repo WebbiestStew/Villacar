@@ -1,0 +1,39 @@
+---
+---
+<section class="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-700 text-white px-6 opacity-0 animate-fadeIn">
+  <div class="text-center max-w-xl">
+    <h1 class="text-5xl font-extrabold mb-6 drop-shadow-lg">Welcome to Villacar</h1>
+    <p class="text-lg mb-8 drop-shadow-md">Find your next car today with confidence and style.</p>
+    <a href="Villacar/src/pages/Inventory.astro" class="inline-block bg-white text-indigo-700 font-semibold px-6 py-3 rounded-md shadow-md transform transition duration-300 hover:scale-105 hover:bg-indigo-200 hover:shadow-glow active:animate-ripple">Check out our inventory</a>
+  </div>
+</section>
+
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes ripple {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 0.7;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  .animate-fadeIn {
+    animation: fadeIn 1s ease forwards;
+  }
+  .animate-ripple {
+    animation: ripple 0.4s ease;
+  }
+  .hover\:shadow-glow:hover {
+    box-shadow: 0 0 12px 4px rgba(99, 102, 241, 0.7);
+  }
+</style>
