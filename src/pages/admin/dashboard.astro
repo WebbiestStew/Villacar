@@ -1,0 +1,604 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { cars } from '../../data/cars';
+
+const carCount = cars.length;
+const featuredCount = cars.filter(car => car.isFeatured).length;
+const newCars = cars.filter(car => car.condition === 'New').length;
+const usedCars = cars.filter(car => car.condition === 'Used').length;
+---
+
+<Layout title="Admin Dashboard - Villacar">
+  <div class="min-h-screen bg-gray-50">
+    <!-- Admin Header -->
+    <div class="bg-white border-b border-gray-200 sticky top-0 z-40">
+      <div class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <div class="h-12 w-12 bg-red-600 rounded-xl flex items-center justify-center shadow-lg">
+              <svg class="h-7 w-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            </div>
+            <div>
+              <h1 class="text-xl font-bold text-gray-900">Admin Dashboard</h1>
+              <p class="text-sm text-gray-600">Manage your vehicle inventory</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-4">
+            <a href="/" class="text-gray-600 hover:text-gray-900 font-medium transition-colors">
+              View Website
+            </a>
+            <button
+              id="logoutBtn"
+              class="bg-red-600 text-white px-6 py-2.5 rounded-xl hover:bg-red-700 font-bold transition-all shadow-lg hover:shadow-xl"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-6 py-8">
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-blue-500">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-600 text-sm font-medium mb-1">Total Vehicles</p>
+              <p class="text-3xl font-bold text-gray-900">{carCount}</p>
+            </div>
+            <div class="h-14 w-14 bg-blue-100 rounded-xl flex items-center justify-center">
+              <svg class="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-green-500">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-600 text-sm font-medium mb-1">Featured</p>
+              <p class="text-3xl font-bold text-gray-900">{featuredCount}</p>
+            </div>
+            <div class="h-14 w-14 bg-green-100 rounded-xl flex items-center justify-center">
+              <svg class="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-purple-500">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-600 text-sm font-medium mb-1">New Cars</p>
+              <p class="text-3xl font-bold text-gray-900">{newCars}</p>
+            </div>
+            <div class="h-14 w-14 bg-purple-100 rounded-xl flex items-center justify-center">
+              <svg class="h-8 w-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-orange-500">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-600 text-sm font-medium mb-1">Used Cars</p>
+              <p class="text-3xl font-bold text-gray-900">{usedCars}</p>
+            </div>
+            <div class="h-14 w-14 bg-orange-100 rounded-xl flex items-center justify-center">
+              <svg class="h-8 w-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl font-bold text-gray-900">Quick Actions</h2>
+          <button
+            id="addCarBtn"
+            class="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-xl hover:shadow-xl transition-all font-bold flex items-center space-x-2 transform hover:-translate-y-0.5"
+          >
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            <span>Add New Vehicle</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Vehicle List -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+        <div class="p-6 border-b border-gray-200">
+          <h2 class="text-xl font-bold text-gray-900">All Vehicles</h2>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-gray-50 border-b border-gray-200">
+              <tr>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Vehicle</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Year</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Price</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Condition</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Mileage</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Featured</th>
+                <th class="px-6 py-4 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              {cars.map(car => (
+                <tr class="hover:bg-gray-50 transition-colors">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center space-x-4">
+                      <img src={car.images[0]} alt={`${car.make} ${car.model}`} class="h-16 w-24 rounded-lg object-cover shadow-md" />
+                      <div>
+                        <p class="font-bold text-gray-900">{car.make} {car.model}</p>
+                        <p class="text-sm text-gray-600">{car.bodyType} • {car.transmission}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {car.year}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-green-600">
+                    ${car.price.toLocaleString()}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span class={`px-3 py-1 rounded-full text-xs font-bold ${
+                      car.condition === 'New' ? 'bg-green-100 text-green-800' :
+                      car.condition === 'Certified' ? 'bg-blue-100 text-blue-800' :
+                      'bg-gray-100 text-gray-800'
+                    }`}>
+                      {car.condition}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {car.mileage.toLocaleString()} mi
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    {car.isFeatured ? (
+                      <svg class="h-5 w-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                      </svg>
+                    ) : (
+                      <span class="text-gray-400">-</span>
+                    )}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <div class="flex items-center justify-end space-x-2">
+                      <button
+                        data-edit-id={car.id}
+                        class="edit-btn text-blue-600 hover:text-blue-800 font-bold transition-colors p-2 hover:bg-blue-50 rounded-lg"
+                        title="Edit"
+                      >
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                      </button>
+                      <button
+                        data-delete-id={car.id}
+                        class="delete-btn text-red-600 hover:text-red-800 font-bold transition-colors p-2 hover:bg-red-50 rounded-lg"
+                        title="Delete"
+                      >
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit/Add Modal -->
+  <div id="carModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen p-4">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-2xl">
+          <h3 id="modalTitle" class="text-2xl font-bold text-gray-900">Add New Vehicle</h3>
+          <button id="closeModal" class="text-gray-400 hover:text-gray-600 transition-colors">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        
+        <form id="carForm" class="p-6 space-y-6">
+          <input type="hidden" id="carId" name="id" />
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-2">Make *</label>
+              <input type="text" id="make" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent" />
+            </div>
+            
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-2">Model *</label>
+              <input type="text" id="model" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent" />
+            </div>
+            
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-2">Year *</label>
+              <input type="number" id="year" required min="1900" max="2030" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent" />
+            </div>
+            
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-2">Price *</label>
+              <input type="number" id="price" required min="0" step="100" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent" />
+            </div>
+            
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-2">Mileage *</label>
+              <input type="number" id="mileage" required min="0" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent" />
+            </div>
+            
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-2">Color *</label>
+              <input type="text" id="color" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent" />
+            </div>
+            
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-2">Condition *</label>
+              <select id="condition" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                <option value="New">New</option>
+                <option value="Used">Used</option>
+                <option value="Certified">Certified</option>
+              </select>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-2">Fuel Type *</label>
+              <select id="fuelType" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                <option value="Gasoline">Gasoline</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Electric">Electric</option>
+                <option value="Hybrid">Hybrid</option>
+              </select>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-2">Transmission *</label>
+              <select id="transmission" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                <option value="Automatic">Automatic</option>
+                <option value="Manual">Manual</option>
+              </select>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-2">Body Type *</label>
+              <select id="bodyType" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                <option value="Sedan">Sedan</option>
+                <option value="SUV">SUV</option>
+                <option value="Truck">Truck</option>
+                <option value="Coupe">Coupe</option>
+                <option value="Convertible">Convertible</option>
+                <option value="Hatchback">Hatchback</option>
+              </select>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-2">VIN *</label>
+              <input type="text" id="vin" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent" />
+            </div>
+            
+            <div class="flex items-center">
+              <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" id="isFeatured" class="h-5 w-5 text-red-600 rounded focus:ring-2 focus:ring-red-500" />
+                <span class="text-sm font-bold text-gray-700">Featured Vehicle</span>
+              </label>
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2">Description *</label>
+            <textarea id="description" required rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent"></textarea>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2">Features (one per line)</label>
+            <textarea id="features" rows="6" placeholder="Apple CarPlay&#10;Backup Camera&#10;Leather Seats" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent"></textarea>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2">Vehicle Images *</label>
+            <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-red-500 transition-colors bg-gray-50">
+              <input
+                type="file"
+                id="imageUpload"
+                accept="image/*"
+                multiple
+                class="hidden"
+              />
+              <label for="imageUpload" class="cursor-pointer">
+                <div class="space-y-3">
+                  <div class="mx-auto h-16 w-16 bg-red-100 rounded-xl flex items-center justify-center">
+                    <svg class="h-8 w-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-sm font-bold text-gray-700">Click to upload images</p>
+                    <p class="text-xs text-gray-500 mt-1">or drag and drop</p>
+                  </div>
+                  <p class="text-xs text-gray-600">PNG, JPG, WEBP up to 10MB each</p>
+                </div>
+              </label>
+            </div>
+            
+            <!-- Image Preview Grid -->
+            <div id="imagePreviewGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4"></div>
+            
+            <!-- Hidden input to store image URLs -->
+            <input type="hidden" id="images" name="images" />
+          </div>
+          
+          <div class="flex items-center justify-end space-x-4 pt-4 border-t border-gray-200">
+            <button type="button" id="cancelBtn" class="px-6 py-3 border border-gray-300 rounded-xl text-gray-700 font-bold hover:bg-gray-50 transition-all">
+              Cancel
+            </button>
+            <button type="submit" class="px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl font-bold hover:shadow-xl transition-all transform hover:-translate-y-0.5">
+              Save Vehicle
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // @ts-nocheck
+    // Check authentication
+    const isLoggedIn = localStorage.getItem('admin_logged_in');
+    const loginTime = localStorage.getItem('admin_login_time');
+    const EIGHT_HOURS = 8 * 60 * 60 * 1000;
+    
+    if (!isLoggedIn || !loginTime || (Date.now() - parseInt(loginTime)) > EIGHT_HOURS) {
+      localStorage.removeItem('admin_logged_in');
+      localStorage.removeItem('admin_login_time');
+      window.location.href = '/admin/login';
+    }
+
+    // Logout
+    document.getElementById('logoutBtn')?.addEventListener('click', () => {
+      localStorage.removeItem('admin_logged_in');
+      localStorage.removeItem('admin_login_time');
+      window.location.href = '/admin/login';
+    });
+
+    // Image upload handling
+    let uploadedImages = [];
+    const imageUploadInput = document.getElementById('imageUpload');
+    const imagePreviewGrid = document.getElementById('imagePreviewGrid');
+    const imagesHiddenInput = document.getElementById('images');
+
+    // Handle file selection
+    imageUploadInput?.addEventListener('change', async (e) => {
+      const files = e.target.files;
+      if (!files) return;
+
+      for (const file of Array.from(files)) {
+        if (file.size > 10 * 1024 * 1024) {
+          alert(`${file.name} is too large. Maximum size is 10MB.`);
+          continue;
+        }
+
+        // Convert to base64 for preview and storage
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const imageUrl = event.target?.result;
+          uploadedImages.push(imageUrl);
+          updateImagePreview();
+          updateHiddenInput();
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Update preview grid
+    function updateImagePreview() {
+      if (!imagePreviewGrid) return;
+      
+      imagePreviewGrid.innerHTML = uploadedImages.map((url, index) => `
+        <div class="relative group rounded-xl overflow-hidden shadow-lg">
+          <img src="${url}" alt="Vehicle ${index + 1}" class="w-full h-32 object-cover">
+          <button
+            type="button"
+            data-index="${index}"
+            class="remove-image absolute top-2 right-2 bg-red-600 text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <div class="absolute bottom-2 left-2 bg-black/60 text-white text-xs px-2 py-1 rounded">
+            Image ${index + 1}
+          </div>
+        </div>
+      `).join('');
+
+      // Add remove handlers
+      document.querySelectorAll('.remove-image').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const index = parseInt(e.currentTarget.dataset.index || '0');
+          uploadedImages.splice(index, 1);
+          updateImagePreview();
+          updateHiddenInput();
+        });
+      });
+    }
+
+    // Update hidden input
+    function updateHiddenInput() {
+      if (imagesHiddenInput) {
+        imagesHiddenInput.value = uploadedImages.join('\n');
+      }
+    }
+
+    // Drag and drop support
+    const dropZone = imageUploadInput?.parentElement;
+    
+    dropZone?.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('border-red-500', 'bg-red-50');
+    });
+
+    dropZone?.addEventListener('dragleave', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('border-red-500', 'bg-red-50');
+    });
+
+    dropZone?.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('border-red-500', 'bg-red-50');
+      
+      const files = e.dataTransfer?.files;
+      if (files && imageUploadInput) {
+        imageUploadInput.files = files;
+        imageUploadInput.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    });
+
+    // Modal controls
+    const modal = document.getElementById('carModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const form = document.getElementById('carForm');
+    
+    document.getElementById('addCarBtn')?.addEventListener('click', () => {
+      if (modalTitle) modalTitle.textContent = 'Add New Vehicle';
+      form?.reset();
+      uploadedImages = [];
+      updateImagePreview();
+      document.getElementById('carId').value = '';
+      modal?.classList.remove('hidden');
+    });
+
+    document.getElementById('closeModal')?.addEventListener('click', () => {
+      modal?.classList.add('hidden');
+    });
+
+    document.getElementById('cancelBtn')?.addEventListener('click', () => {
+      modal?.classList.add('hidden');
+    });
+
+    // Edit buttons
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const id = e.currentTarget.dataset.editId;
+        
+        // Load car data from cars.ts import
+        const { cars } = await import('../../data/cars');
+        const car = cars.find(c => c.id === id);
+        
+        if (!car) {
+          alert('Car not found');
+          return;
+        }
+        
+        if (modalTitle) modalTitle.textContent = 'Edit Vehicle';
+        document.getElementById('carId').value = car.id;
+        document.getElementById('make').value = car.make;
+        document.getElementById('model').value = car.model;
+        document.getElementById('year').value = car.year.toString();
+        document.getElementById('price').value = car.price.toString();
+        document.getElementById('mileage').value = car.mileage.toString();
+        document.getElementById('color').value = car.color;
+        document.getElementById('condition').value = car.condition;
+        document.getElementById('fuelType').value = car.fuelType;
+        document.getElementById('transmission').value = car.transmission;
+        document.getElementById('bodyType').value = car.bodyType;
+        document.getElementById('vin').value = car.vin;
+        document.getElementById('isFeatured').checked = car.isFeatured;
+        document.getElementById('description').value = car.description;
+        document.getElementById('features').value = car.features.join('\n');
+        
+        // Load existing images
+        uploadedImages = car.images;
+        updateImagePreview();
+        updateHiddenInput();
+        
+        modal?.classList.remove('hidden');
+      });
+    });
+
+    // Form submission
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      if (uploadedImages.length === 0) {
+        alert('Please upload at least one image');
+        return;
+      }
+      
+      const id = document.getElementById('carId').value;
+      const features = document.getElementById('features').value
+        .split('\n')
+        .map(f => f.trim())
+        .filter(f => f.length > 0);
+      
+      const carData = {
+        id: id || Date.now().toString(),
+        make: document.getElementById('make').value,
+        model: document.getElementById('model').value,
+        year: parseInt(document.getElementById('year').value),
+        price: parseInt(document.getElementById('price').value),
+        mileage: parseInt(document.getElementById('mileage').value),
+        color: document.getElementById('color').value,
+        condition: document.getElementById('condition').value,
+        fuelType: document.getElementById('fuelType').value,
+        transmission: document.getElementById('transmission').value,
+        bodyType: document.getElementById('bodyType').value,
+        vin: document.getElementById('vin').value,
+        isFeatured: document.getElementById('isFeatured').checked,
+        description: document.getElementById('description').value,
+        features: features,
+        images: uploadedImages
+      };
+      
+      // Show the formatted code for manual copying
+      const carString = `{
+    id: '${carData.id}',
+    make: '${carData.make}',
+    model: '${carData.model}',
+    year: ${carData.year},
+    price: ${carData.price},
+    mileage: ${carData.mileage},
+    condition: '${carData.condition}',
+    fuelType: '${carData.fuelType}',
+    transmission: '${carData.transmission}',
+    bodyType: '${carData.bodyType}',
+    color: '${carData.color}',
+    description: '${carData.description.replace(/'/g, "\\'")}',
+    features: [
+${carData.features.map(f => `      '${f.replace(/'/g, "\\'")}'`).join(',\n')}
+    ],
+    images: [
+${carData.images.map((img, i) => `      '${img}'${i < carData.images.length - 1 ? ',' : ''}`).join('\n')}
+    ],
+    isFeatured: ${carData.isFeatured},
+    vin: '${carData.vin}'
+  },`;
+      
+      // Copy to clipboard
+      navigator.clipboard.writeText(carString);
+      
+      alert(`✅ Vehicle data copied to clipboard!\n\n${id ? 'To UPDATE' : 'To ADD'} this vehicle:\n\n1. Open src/data/cars.ts\n2. ${id ? 'Find and replace the existing car with id "' + id + '"' : 'Add the copied code before the closing ];'}\n3. Save the file\n4. Refresh your website\n\n💡 The code has been copied to your clipboard!`);
+      
+      modal?.classList.add('hidden');
+    });
+  </script>
+</Layout>
+

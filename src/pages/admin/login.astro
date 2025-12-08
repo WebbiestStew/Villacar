@@ -1,0 +1,109 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Admin Login - Villacar">
+  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+      <div>
+        <div class="mx-auto h-16 w-16 bg-red-600 rounded-2xl flex items-center justify-center shadow-xl">
+          <svg class="h-10 w-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+        </div>
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          Admin Access
+        </h2>
+        <p class="mt-2 text-center text-sm text-gray-600">
+          Enter your password to manage inventory
+        </p>
+      </div>
+      
+      <form id="loginForm" class="mt-8 space-y-6 bg-white p-8 rounded-2xl shadow-xl">
+        <div id="errorMessage" class="hidden bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
+          <div class="flex">
+            <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+            </svg>
+            <p class="ml-3 text-sm text-red-700 font-medium" id="errorText"></p>
+          </div>
+        </div>
+
+        <div>
+          <label for="password" class="block text-sm font-bold text-gray-700 mb-2">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            required
+            class="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+            placeholder="Enter admin password"
+            autofocus
+          />
+        </div>
+
+        <div>
+          <button
+            type="submit"
+            class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-base font-bold rounded-xl text-white bg-gradient-to-r from-red-600 to-red-700 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all transform hover:-translate-y-0.5"
+          >
+            <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+              <svg class="h-5 w-5 text-red-300 group-hover:text-red-200 transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+              </svg>
+            </span>
+            Sign in
+          </button>
+        </div>
+
+        <div class="text-sm text-center">
+          <a href="/" class="font-medium text-red-600 hover:text-red-500 transition-colors">
+            ← Back to website
+          </a>
+        </div>
+      </form>
+
+      <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm">
+        <p class="text-blue-800 font-semibold mb-1">🔐 For Admin Use Only</p>
+        <p class="text-blue-700">Contact management for password access.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // CHANGE THIS PASSWORD!
+    const ADMIN_PASSWORD = 'villacar123';
+    
+    const form = document.getElementById('loginForm') as HTMLFormElement;
+    const passwordInput = document.getElementById('password') as HTMLInputElement;
+    const errorMessage = document.getElementById('errorMessage');
+    const errorText = document.getElementById('errorText');
+
+    // Check if already logged in
+    if (localStorage.getItem('admin_logged_in') === 'true') {
+      window.location.href = '/admin/dashboard';
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const password = passwordInput.value;
+      
+      if (password === ADMIN_PASSWORD) {
+        localStorage.setItem('admin_logged_in', 'true');
+        localStorage.setItem('admin_login_time', Date.now().toString());
+        window.location.href = '/admin/dashboard';
+      } else {
+        errorMessage?.classList.remove('hidden');
+        if (errorText) errorText.textContent = 'Invalid password. Please try again.';
+        passwordInput.value = '';
+        passwordInput.focus();
+      }
+    });
+
+    // Hide error message when typing
+    passwordInput.addEventListener('input', () => {
+      errorMessage?.classList.add('hidden');
+    });
+  </script>
+</Layout>
