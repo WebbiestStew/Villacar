@@ -1,0 +1,69 @@
+---
+---
+
+<section class="bg-white py-12 border-t border-gray-200">
+  <div class="container mx-auto px-4">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl font-bold text-gray-900">Recently Viewed</h2>
+      <button 
+        id="clearRecentlyViewed"
+        class="text-sm text-gray-600 hover:text-red-600 transition"
+      >
+        Clear History
+      </button>
+    </div>
+    
+    <div id="recentlyViewedContainer">
+      <p class="text-gray-500 text-center py-8">No recently viewed vehicles</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // @ts-nocheck
+  function displayRecentlyViewed() {
+    const recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed') || '[]');
+    const container = document.getElementById('recentlyViewedContainer');
+    
+    if (!container) return;
+    
+    if (recentlyViewed.length === 0) {
+      container.innerHTML = '<p class="text-gray-500 text-center py-8">No recently viewed vehicles</p>';
+      return;
+    }
+
+    container.innerHTML = `
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        ${recentlyViewed.map(car => `
+          <a href="/cars/${car.id}" class="group">
+            <div class="bg-gray-50 rounded-lg overflow-hidden hover:shadow-lg transition">
+              <div class="relative h-32">
+                <img 
+                  src="${car.image}" 
+                  alt="${car.year} ${car.make} ${car.model}"
+                  class="w-full h-full object-cover group-hover:scale-110 transition duration-300"
+                />
+              </div>
+              <div class="p-3">
+                <p class="font-semibold text-sm text-gray-900 truncate">${car.year} ${car.make}</p>
+                <p class="text-xs text-gray-600 truncate">${car.model}</p>
+                <p class="text-sm font-bold text-red-600 mt-1">$${car.price.toLocaleString()}</p>
+              </div>
+            </div>
+          </a>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  // Display on load
+  displayRecentlyViewed();
+
+  // Clear button
+  document.getElementById('clearRecentlyViewed')?.addEventListener('click', () => {
+    if (confirm('Clear your recently viewed history?')) {
+      localStorage.setItem('recentlyViewed', '[]');
+      displayRecentlyViewed();
+    }
+  });
+</script>

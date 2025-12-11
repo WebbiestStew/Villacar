@@ -1,0 +1,153 @@
+---
+const testimonials = [
+  {
+    id: 1,
+    name: "Maria Rodriguez",
+    location: "Albuquerque, NM",
+    rating: 5,
+    date: "November 2024",
+    vehicle: "2024 Toyota Camry SE",
+    text: "Absolutely amazing experience! The team at Villacar was professional, knowledgeable, and made the entire buying process smooth. My new Camry is perfect, and I got a great deal on my trade-in.",
+    avatar: "MR"
+  },
+  {
+    id: 2,
+    name: "James Thompson",
+    location: "Santa Fe, NM",
+    rating: 5,
+    date: "October 2024",
+    vehicle: "2023 GMC Sierra",
+    text: "Best dealership experience I've ever had. No pressure, transparent pricing, and they worked with my budget. Highly recommend Villacar to anyone looking for a quality vehicle!",
+    avatar: "JT"
+  },
+  {
+    id: 3,
+    name: "Sarah Chen",
+    location: "Rio Rancho, NM",
+    rating: 5,
+    date: "September 2024",
+    vehicle: "2024 Nissan Rogue",
+    text: "I was nervous about buying a car, but the staff made me feel comfortable and answered all my questions. The financing options were flexible, and I drove away in my dream SUV the same day!",
+    avatar: "SC"
+  },
+  {
+    id: 4,
+    name: "Michael Davis",
+    location: "Los Lunas, NM",
+    rating: 5,
+    date: "August 2024",
+    vehicle: "2023 Dodge Charger",
+    text: "Top-notch service from start to finish. The vehicle was exactly as described, and they even detailed it before delivery. Villacar has earned a customer for life!",
+    avatar: "MD"
+  },
+  {
+    id: 5,
+    name: "Jennifer Martinez",
+    location: "Albuquerque, NM",
+    rating: 5,
+    date: "July 2024",
+    vehicle: "2024 Toyota RAV4",
+    text: "Great selection, fair prices, and honest salespeople. They helped me find the perfect family SUV within my budget. The whole process was fast and painless!",
+    avatar: "JM"
+  },
+  {
+    id: 6,
+    name: "Robert Wilson",
+    location: "Corrales, NM",
+    rating: 5,
+    date: "June 2024",
+    vehicle: "2023 GMC Terrain",
+    text: "I've bought several cars over the years, and this was by far the best experience. Professional, friendly, and no hidden fees. Will definitely be back for my next vehicle!",
+    avatar: "RW"
+  }
+];
+---
+
+<section class="bg-gray-50 py-16">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        What Our <span class="text-red-600">Customers Say</span>
+      </h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        Don't just take our word for it - hear from our satisfied customers
+      </p>
+      <div class="flex items-center justify-center gap-2 mt-4">
+        <div class="flex gap-1">
+          {[1,2,3,4,5].map(() => (
+            <svg class="w-8 h-8 text-yellow-400 fill-current" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+          ))}
+        </div>
+        <p class="text-2xl font-bold text-gray-800">5.0 <span class="text-lg text-gray-600">/ 5.0</span></p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {testimonials.map((review) => (
+        <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-shadow p-8 border border-gray-100">
+          <!-- Header -->
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-white font-bold text-lg">
+                {review.avatar}
+              </div>
+              <div>
+                <h3 class="font-bold text-gray-900">{review.name}</h3>
+                <p class="text-sm text-gray-500">{review.location}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rating -->
+          <div class="flex items-center gap-2 mb-4">
+            <div class="flex gap-1">
+              {[...Array(review.rating)].map(() => (
+                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+              ))}
+            </div>
+            <span class="text-sm text-gray-500">{review.date}</span>
+          </div>
+
+          <!-- Vehicle -->
+          <div class="bg-blue-50 rounded-lg px-3 py-2 mb-4 inline-block">
+            <p class="text-sm font-medium text-blue-800">
+              🚗 {review.vehicle}
+            </p>
+          </div>
+
+          <!-- Review Text -->
+          <p class="text-gray-700 leading-relaxed">
+            "{review.text}"
+          </p>
+
+          <!-- Verified Badge -->
+          <div class="mt-4 pt-4 border-t border-gray-100">
+            <div class="flex items-center gap-2 text-green-600">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              <span class="text-sm font-medium">Verified Purchase</span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-12">
+      <a 
+        href="/contact" 
+        class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl font-bold text-lg hover:from-red-700 hover:to-red-800 transition shadow-lg"
+      >
+        <span>Start Your Journey Today</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

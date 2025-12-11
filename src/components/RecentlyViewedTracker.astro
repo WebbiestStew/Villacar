@@ -1,0 +1,25 @@
+---
+const { car } = Astro.props;
+---
+
+<!-- Recently Viewed Tracker (invisible, just tracks) -->
+<script define:vars={{ carId: car.id, carData: { id: car.id, make: car.make, model: car.model, year: car.year, price: car.price, image: car.images[0] } }}>
+  // @ts-nocheck
+  function trackRecentlyViewed() {
+    const recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed') || '[]');
+    
+    // Remove if already exists
+    const filtered = recentlyViewed.filter(item => item.id !== carId);
+    
+    // Add to beginning
+    filtered.unshift(carData);
+    
+    // Keep only last 10
+    const limited = filtered.slice(0, 10);
+    
+    localStorage.setItem('recentlyViewed', JSON.stringify(limited));
+  }
+
+  // Track on page load
+  trackRecentlyViewed();
+</script>

@@ -2,7 +2,16 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import SearchFilters from '../components/SearchFilters.astro';
+import FinancingCalculator from '../components/FinancingCalculator.astro';
+import VehicleComparison from '../components/VehicleComparison.astro';
+import TradeInEstimator from '../components/TradeInEstimator.astro';
+import TestDriveScheduler from '../components/TestDriveScheduler.astro';
 import { cars, type Car } from '../data/cars';
+
+// Get unique values for filters
+const makes = [...new Set(cars.map(car => car.make))].sort();
+const bodyTypes = [...new Set(cars.map(car => car.bodyType))].sort();
 ---
 
 <Layout 
@@ -13,58 +22,20 @@ import { cars, type Car } from '../data/cars';
   
   <main class="min-h-screen bg-gray-50">
     <!-- Page Header -->
-    <section class="bg-gradient-to-br from-gray-900 to-gray-800 py-20">
+    <section class="bg-gradient-to-br from-gray-900 to-gray-800 py-24">
       <div class="container mx-auto px-4">
         <h1 class="text-5xl md:text-6xl font-bold text-white mb-6 text-center">
           Our <span class="text-red-400">Inventory</span>
         </h1>
-        <p class="text-xl text-gray-300 text-center max-w-3xl mx-auto mb-10">
-          Browse our selection of quality vehicles from Nissan, Dodge, GMC, Toyota, and more
+        <p class="text-xl text-gray-300 text-center max-w-3xl mx-auto">
+          Browse our selection of quality vehicles with advanced search and comparison tools
         </p>
-
-        <!-- Filter Bar -->
-        <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-2xl p-6">
-          <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-            <select id="makeFilter" class="px-4 py-3 rounded-lg border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500">
-              <option value="">All Makes</option>
-              <option value="Toyota">Toyota</option>
-              <option value="Nissan">Nissan</option>
-              <option value="GMC">GMC</option>
-              <option value="Dodge">Dodge</option>
-            </select>
-            
-            <select id="typeFilter" class="px-4 py-3 rounded-lg border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500">
-              <option value="">All Types</option>
-              <option value="Sedan">Sedan</option>
-              <option value="SUV">SUV</option>
-              <option value="Truck">Truck</option>
-            </select>
-            
-            <select id="yearFilter" class="px-4 py-3 rounded-lg border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500">
-              <option value="">All Years</option>
-              <option value="2025">2025</option>
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-              <option value="2022">2022 & Older</option>
-            </select>
-            
-            <select id="priceFilter" class="px-4 py-3 rounded-lg border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500">
-              <option value="">Max Price</option>
-              <option value="25000">Under $25,000</option>
-              <option value="35000">Under $35,000</option>
-              <option value="50000">Under $50,000</option>
-              <option value="999999">$50,000+</option>
-            </select>
-            
-            <button id="resetFilters" class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-300 font-semibold flex items-center justify-center">
-              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
-              Reset
-            </button>
-          </div>
-        </div>
       </div>
+    </section>
+
+    <!-- Search & Filters -->
+    <section class="container mx-auto px-4 -mt-8">
+      <SearchFilters makes={makes} bodyTypes={bodyTypes} />
     </section>
 
     <!-- Car Grid -->
@@ -204,17 +175,38 @@ import { cars, type Car } from '../data/cars';
         </div>
       </div>
     </section>
+
+    <!-- Vehicle Comparison Section -->
+    <section class="py-16 bg-white" data-comparison-section>
+      <div class="container mx-auto px-4">
+        <VehicleComparison />
+      </div>
+    </section>
+
+    <!-- Financing Calculator Section -->
+    <section class="py-16">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <FinancingCalculator />
+          <TradeInEstimator />
+        </div>
+      </div>
+    </section>
   </main>
+
+  <!-- Test Drive Modal (Global) -->
+  <TestDriveScheduler car={{id: '', year: 0, make: '', model: ''}} />
 
   <Footer />
 
   <script>
+    // @ts-nocheck
     // Wishlist functionality
     function getWishlist() {
       return JSON.parse(localStorage.getItem('wishlist') || '[]');
     }
 
-    function saveWishlist(wishlist: string[]) {
+    function saveWishlist(wishlist) {
       localStorage.setItem('wishlist', JSON.stringify(wishlist));
     }
 
@@ -233,13 +225,11 @@ import { cars, type Car } from '../data/cars';
       });
     }
 
-    // @ts-ignore - Adding function to window for onclick handlers
     window.toggleWishlist = function(btn) {
       const carId = btn.getAttribute('data-car-id');
       let wishlist = getWishlist();
       
       if (wishlist.includes(carId || '')) {
-        // @ts-ignore
         wishlist = wishlist.filter(id => id !== carId);
       } else {
         wishlist.push(carId);
@@ -251,154 +241,110 @@ import { cars, type Car } from '../data/cars';
 
     updateAllWishlistButtons();
 
-    // Get all car items and filters
+    // Advanced filtering system
     const carItems = document.querySelectorAll('.car-item');
-    const makeFilter = document.getElementById('makeFilter') as HTMLSelectElement;
-    const typeFilter = document.getElementById('typeFilter') as HTMLSelectElement;
-    const yearFilter = document.getElementById('yearFilter') as HTMLSelectElement;
-    const priceFilter = document.getElementById('priceFilter') as HTMLSelectElement;
-    const sortSelect = document.getElementById('sortSelect') as HTMLSelectElement;
-    const resetButton = document.getElementById('resetFilters');
-    const vehicleCount = document.getElementById('vehicleCount');
+    const resultsCount = document.getElementById('resultsCount');
     const carGrid = document.getElementById('carGrid');
+    
+    // Get all car data for filtering
+    const carsData = Array.from(carItems).map(item => ({
+      element: item,
+      make: item.dataset.make,
+      model: item.textContent.toLowerCase(),
+      year: parseInt(item.dataset.year),
+      price: parseInt(item.dataset.price),
+      mileage: parseInt(item.dataset.mileage),
+      bodyType: item.dataset.type,
+      condition: item.querySelector('[class*="condition"]')?.textContent || '',
+      fuelType: item.textContent.toLowerCase(),
+      transmission: item.textContent.toLowerCase(),
+      color: item.textContent.toLowerCase()
+    }));
 
-    function filterAndSortCars() {
-      const selectedMake = makeFilter?.value || '';
-      const selectedType = typeFilter?.value || '';
-      const selectedYear = yearFilter?.value || '';
-      const selectedPrice = priceFilter?.value || '';
-      const sortBy = sortSelect?.value || 'price-low';
+    function applyFilters() {
+      const searchText = document.getElementById('searchInput')?.value.toLowerCase() || '';
+      const make = document.getElementById('makeFilter')?.value || '';
+      const bodyType = document.getElementById('bodyTypeFilter')?.value || '';
+      const condition = document.getElementById('conditionFilter')?.value || '';
+      const sortBy = document.getElementById('sortBy')?.value || 'featured';
+      
+      const minPrice = parseInt(document.getElementById('minPrice')?.value) || 0;
+      const maxPrice = parseInt(document.getElementById('maxPrice')?.value) || Infinity;
+      const minYear = parseInt(document.getElementById('minYear')?.value) || 0;
+      const maxYear = parseInt(document.getElementById('maxYear')?.value) || Infinity;
+      const minMileage = parseInt(document.getElementById('minMileage')?.value) || 0;
+      const maxMileage = parseInt(document.getElementById('maxMileage')?.value) || Infinity;
+      const fuelType = document.getElementById('fuelTypeFilter')?.value || '';
+      const transmission = document.getElementById('transmissionFilter')?.value || '';
+      const color = document.getElementById('colorFilter')?.value.toLowerCase() || '';
 
-      let visibleCars: HTMLElement[] = [];
-      let visibleCount = 0;
-
-      // Filter cars
-      carItems.forEach((item) => {
-        const carElement = item as HTMLElement;
-        const make = carElement.dataset.make || '';
-        const type = carElement.dataset.type || '';
-        const year = parseInt(carElement.dataset.year || '0');
-        const price = parseInt(carElement.dataset.price || '0');
-
-        let show = true;
-
-        // Apply make filter
-        if (selectedMake && make !== selectedMake) {
-          show = false;
+      let visibleCars = carsData.filter(car => {
+        // Search text filter
+        if (searchText && !car.model.includes(searchText) && !car.make.toLowerCase().includes(searchText)) {
+          return false;
         }
-
-        // Apply type filter
-        if (selectedType && type !== selectedType) {
-          show = false;
-        }
-
-        // Apply year filter
-        if (selectedYear) {
-          if (selectedYear === '2022') {
-            if (year > 2022) show = false;
-          } else {
-            if (year !== parseInt(selectedYear)) show = false;
-          }
-        }
-
-        // Apply price filter
-        if (selectedPrice) {
-          if (price > parseInt(selectedPrice)) {
-            show = false;
-          }
-        }
-
-        if (show) {
-          carElement.style.display = 'block';
-          visibleCars.push(carElement);
-          visibleCount++;
-        } else {
-          carElement.style.display = 'none';
-        }
+        
+        // Basic filters
+        if (make && car.make !== make) return false;
+        if (bodyType && car.bodyType !== bodyType) return false;
+        if (condition && !car.condition.includes(condition)) return false;
+        
+        // Advanced filters
+        if (car.price < minPrice || car.price > maxPrice) return false;
+        if (car.year < minYear || car.year > maxYear) return false;
+        if (car.mileage < minMileage || car.mileage > maxMileage) return false;
+        if (fuelType && !car.fuelType.includes(fuelType.toLowerCase())) return false;
+        if (transmission && !car.transmission.includes(transmission.toLowerCase())) return false;
+        if (color && !car.color.includes(color)) return false;
+        
+        return true;
       });
 
-      // Sort visible cars
+      // Sorting
       visibleCars.sort((a, b) => {
-        const priceA = parseInt(a.dataset.price || '0');
-        const priceB = parseInt(b.dataset.price || '0');
-        const yearA = parseInt(a.dataset.year || '0');
-        const yearB = parseInt(b.dataset.year || '0');
-        const mileageA = parseInt(a.dataset.mileage || '0');
-        const mileageB = parseInt(b.dataset.mileage || '0');
-
         switch (sortBy) {
-          case 'price-low':
-            return priceA - priceB;
-          case 'price-high':
-            return priceB - priceA;
-          case 'year-new':
-            return yearB - yearA;
-          case 'mileage-low':
-            return mileageA - mileageB;
-          default:
-            return 0;
+          case 'price-low': return a.price - b.price;
+          case 'price-high': return b.price - a.price;
+          case 'year-new': return b.year - a.year;
+          case 'mileage-low': return a.mileage - b.mileage;
+          default: return 0;
         }
       });
 
-      // Reorder DOM elements
+      // Update visibility
+      carItems.forEach(item => item.style.display = 'none');
       visibleCars.forEach(car => {
-        carGrid?.appendChild(car);
+        car.element.style.display = 'block';
+        carGrid?.appendChild(car.element);
       });
 
       // Update count
-      if (vehicleCount) {
-        vehicleCount.textContent = visibleCount.toString();
-      }
-
-      // Show/hide no results message
-      const noResultsId = 'noResults';
-      let noResults = document.getElementById(noResultsId);
-      
-      if (visibleCount === 0) {
-        if (!noResults) {
-          noResults = document.createElement('div');
-          noResults.id = noResultsId;
-          noResults.className = 'col-span-full text-center py-16';
-          noResults.innerHTML = `
-            <div class="max-w-md mx-auto">
-              <svg class="w-24 h-24 text-gray-300 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <h3 class="text-2xl font-bold text-gray-900 mb-2">No vehicles found</h3>
-              <p class="text-gray-600 mb-6">Try adjusting your filters to see more results</p>
-              <button id="resetFromNoResults" class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-300 font-semibold">
-                Reset Filters
-              </button>
-            </div>
-          `;
-          carGrid?.appendChild(noResults);
-          
-          // Add event listener to the new reset button
-          document.getElementById('resetFromNoResults')?.addEventListener('click', resetFilters);
-        }
-      } else if (noResults) {
-        noResults.remove();
+      if (resultsCount) {
+        resultsCount.textContent = `Showing ${visibleCars.length} of ${carItems.length} vehicles`;
       }
     }
 
-    function resetFilters() {
-      if (makeFilter) makeFilter.value = '';
-      if (typeFilter) typeFilter.value = '';
-      if (yearFilter) yearFilter.value = '';
-      if (priceFilter) priceFilter.value = '';
-      if (sortSelect) sortSelect.value = 'price-low';
-      filterAndSortCars();
-    }
+    // Add event listeners to all filters
+    ['searchInput', 'makeFilter', 'bodyTypeFilter', 'conditionFilter', 'sortBy',
+     'minPrice', 'maxPrice', 'minYear', 'maxYear', 'minMileage', 'maxMileage',
+     'fuelTypeFilter', 'transmissionFilter', 'colorFilter'].forEach(id => {
+      document.getElementById(id)?.addEventListener('input', applyFilters);
+      document.getElementById(id)?.addEventListener('change', applyFilters);
+    });
 
-    // Add event listeners
-    makeFilter?.addEventListener('change', filterAndSortCars);
-    typeFilter?.addEventListener('change', filterAndSortCars);
-    yearFilter?.addEventListener('change', filterAndSortCars);
-    priceFilter?.addEventListener('change', filterAndSortCars);
-    sortSelect?.addEventListener('change', filterAndSortCars);
-    resetButton?.addEventListener('click', resetFilters);
+    // Clear filters
+    document.getElementById('clearFilters')?.addEventListener('click', () => {
+      ['searchInput', 'makeFilter', 'bodyTypeFilter', 'conditionFilter', 'sortBy',
+       'minPrice', 'maxPrice', 'minYear', 'maxYear', 'minMileage', 'maxMileage',
+       'fuelTypeFilter', 'transmissionFilter', 'colorFilter'].forEach(id => {
+        const elem = document.getElementById(id);
+        if (elem) elem.value = '';
+      });
+      document.getElementById('sortBy').value = 'featured';
+      applyFilters();
+    });
 
-    // Initial sort on page load
-    filterAndSortCars();
+    // Initialize
+    applyFilters();
   </script>
 </Layout>

@@ -1,0 +1,194 @@
+---
+---
+
+<div class="bg-gradient-to-br from-blue-50 to-white rounded-2xl shadow-xl p-8">
+  <div class="flex items-center gap-3 mb-6">
+    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+    </svg>
+    <h2 class="text-3xl font-bold text-gray-900">Financing Calculator</h2>
+  </div>
+  
+  <p class="text-gray-600 mb-8">Estimate your monthly car payment</p>
+
+  <div class="space-y-6">
+    <!-- Vehicle Price -->
+    <div>
+      <label for="vehiclePrice" class="block text-sm font-medium text-gray-700 mb-2">
+        Vehicle Price ($)
+      </label>
+      <input 
+        type="number" 
+        id="vehiclePrice" 
+        value="25000"
+        class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
+      />
+    </div>
+
+    <!-- Down Payment -->
+    <div>
+      <label for="downPayment" class="block text-sm font-medium text-gray-700 mb-2">
+        Down Payment ($)
+      </label>
+      <input 
+        type="number" 
+        id="downPayment" 
+        value="5000"
+        class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
+      />
+      <p class="text-sm text-gray-500 mt-1">
+        <span id="downPaymentPercent">20%</span> of vehicle price
+      </p>
+    </div>
+
+    <!-- Interest Rate -->
+    <div>
+      <label for="interestRate" class="block text-sm font-medium text-gray-700 mb-2">
+        Interest Rate (% APR)
+      </label>
+      <input 
+        type="number" 
+        id="interestRate" 
+        value="6.5"
+        step="0.1"
+        class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
+      />
+    </div>
+
+    <!-- Loan Term -->
+    <div>
+      <label for="loanTerm" class="block text-sm font-medium text-gray-700 mb-2">
+        Loan Term (months)
+      </label>
+      <select 
+        id="loanTerm"
+        class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
+      >
+        <option value="24">24 months (2 years)</option>
+        <option value="36">36 months (3 years)</option>
+        <option value="48">48 months (4 years)</option>
+        <option value="60" selected>60 months (5 years)</option>
+        <option value="72">72 months (6 years)</option>
+        <option value="84">84 months (7 years)</option>
+      </select>
+    </div>
+
+    <!-- Trade-in Value (Optional) -->
+    <div>
+      <label for="tradeInValue" class="block text-sm font-medium text-gray-700 mb-2">
+        Trade-in Value ($) <span class="text-gray-400">(Optional)</span>
+      </label>
+      <input 
+        type="number" 
+        id="tradeInValue" 
+        value="0"
+        class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
+      />
+    </div>
+
+    <!-- Calculate Button -->
+    <button 
+      id="calculateBtn"
+      class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-blue-800 transition shadow-lg"
+    >
+      Calculate Payment
+    </button>
+
+    <!-- Results -->
+    <div id="results" class="hidden bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border-2 border-green-200">
+      <h3 class="text-2xl font-bold text-gray-900 mb-4">Your Estimated Payment</h3>
+      
+      <div class="bg-white rounded-lg p-6 mb-4">
+        <p class="text-gray-600 text-sm mb-2">Monthly Payment</p>
+        <p id="monthlyPayment" class="text-5xl font-bold text-green-600">$0</p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div class="bg-white rounded-lg p-4">
+          <p class="text-gray-600 text-sm mb-1">Loan Amount</p>
+          <p id="loanAmount" class="text-xl font-bold text-gray-900">$0</p>
+        </div>
+        <div class="bg-white rounded-lg p-4">
+          <p class="text-gray-600 text-sm mb-1">Total Interest</p>
+          <p id="totalInterest" class="text-xl font-bold text-gray-900">$0</p>
+        </div>
+        <div class="bg-white rounded-lg p-4">
+          <p class="text-gray-600 text-sm mb-1">Total Cost</p>
+          <p id="totalCost" class="text-xl font-bold text-gray-900">$0</p>
+        </div>
+        <div class="bg-white rounded-lg p-4">
+          <p class="text-gray-600 text-sm mb-1">Total Paid</p>
+          <p id="totalPaid" class="text-xl font-bold text-gray-900">$0</p>
+        </div>
+      </div>
+
+      <p class="text-xs text-gray-500 mt-4 text-center">
+        * This is an estimate. Actual rates and terms may vary. Contact us for a detailed quote.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // @ts-nocheck
+  function calculatePayment() {
+    const price = parseFloat(document.getElementById('vehiclePrice').value) || 0;
+    const downPayment = parseFloat(document.getElementById('downPayment').value) || 0;
+    const interestRate = parseFloat(document.getElementById('interestRate').value) || 0;
+    const loanTerm = parseInt(document.getElementById('loanTerm').value) || 60;
+    const tradeIn = parseFloat(document.getElementById('tradeInValue').value) || 0;
+
+    // Calculate loan amount
+    const loanAmount = price - downPayment - tradeIn;
+
+    if (loanAmount <= 0) {
+      alert('Loan amount must be greater than $0');
+      return;
+    }
+
+    // Calculate monthly payment using standard loan formula
+    const monthlyRate = interestRate / 100 / 12;
+    let monthlyPayment;
+    
+    if (monthlyRate === 0) {
+      monthlyPayment = loanAmount / loanTerm;
+    } else {
+      monthlyPayment = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, loanTerm)) / 
+                       (Math.pow(1 + monthlyRate, loanTerm) - 1);
+    }
+
+    const totalPaid = monthlyPayment * loanTerm;
+    const totalInterest = totalPaid - loanAmount;
+    const totalCost = totalPaid + downPayment + tradeIn;
+
+    // Update UI
+    document.getElementById('monthlyPayment').textContent = `$${monthlyPayment.toFixed(2)}`;
+    document.getElementById('loanAmount').textContent = `$${loanAmount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+    document.getElementById('totalInterest').textContent = `$${totalInterest.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+    document.getElementById('totalCost').textContent = `$${totalCost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+    document.getElementById('totalPaid').textContent = `$${totalPaid.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+    
+    document.getElementById('results').classList.remove('hidden');
+  }
+
+  function updateDownPaymentPercent() {
+    const price = parseFloat(document.getElementById('vehiclePrice').value) || 0;
+    const downPayment = parseFloat(document.getElementById('downPayment').value) || 0;
+    const percent = price > 0 ? ((downPayment / price) * 100).toFixed(1) : 0;
+    document.getElementById('downPaymentPercent').textContent = `${percent}%`;
+  }
+
+  document.getElementById('calculateBtn')?.addEventListener('click', calculatePayment);
+  document.getElementById('vehiclePrice')?.addEventListener('input', updateDownPaymentPercent);
+  document.getElementById('downPayment')?.addEventListener('input', updateDownPaymentPercent);
+
+  // Auto-calculate on any input change
+  const inputs = ['vehiclePrice', 'downPayment', 'interestRate', 'loanTerm', 'tradeInValue'];
+  inputs.forEach(id => {
+    document.getElementById(id)?.addEventListener('input', () => {
+      if (!document.getElementById('results').classList.contains('hidden')) {
+        calculatePayment();
+      }
+    });
+  });
+</script>

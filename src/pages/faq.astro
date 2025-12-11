@@ -1,0 +1,325 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+const faqs = [
+  {
+    category: "Buying Process",
+    questions: [
+      {
+        q: "How do I purchase a vehicle from Villacar?",
+        a: "Start by browsing our inventory online or visiting our dealership. Once you find a vehicle you're interested in, schedule a test drive. Our team will help you with financing, trade-in evaluation, and complete all paperwork."
+      },
+      {
+        q: "Can I test drive before buying?",
+        a: "Absolutely! We encourage all customers to test drive vehicles. You can schedule a test drive online or walk in during business hours. Bring your driver's license and we'll take care of the rest."
+      },
+      {
+        q: "What documents do I need to buy a car?",
+        a: "You'll need a valid driver's license, proof of insurance, proof of income (pay stubs or bank statements), and proof of residence (utility bill). If financing, we may request additional documentation."
+      },
+      {
+        q: "How long does the buying process take?",
+        a: "Most customers complete the entire process in 2-3 hours. This includes test drive, financing approval, paperwork, and vehicle delivery. We work efficiently to get you on the road quickly!"
+      }
+    ]
+  },
+  {
+    category: "Financing",
+    questions: [
+      {
+        q: "Do you offer financing options?",
+        a: "Yes! We work with multiple lenders to offer competitive financing rates. Whether you have excellent credit, are a first-time buyer, or have credit challenges, we'll find options that work for you."
+      },
+      {
+        q: "What credit score do I need?",
+        a: "We work with all credit scores. While better credit typically means better rates, we have programs for buyers with all credit histories, including no credit and bad credit."
+      },
+      {
+        q: "Can I get pre-approved for financing?",
+        a: "Yes! Contact us to get pre-approved. Pre-approval helps you understand your budget and makes the buying process faster. It's not a commitment to purchase."
+      },
+      {
+        q: "What is the down payment requirement?",
+        a: "Down payments vary based on the vehicle and your credit profile. Typically, we recommend 10-20% down, but we can work with as little as $0 down for qualified buyers."
+      },
+      {
+        q: "Do you accept trade-ins as down payment?",
+        a: "Absolutely! Your trade-in equity can be used as your down payment. Use our online trade-in estimator to get an instant quote on your current vehicle."
+      }
+    ]
+  },
+  {
+    category: "Vehicle Condition & History",
+    questions: [
+      {
+        q: "Do you provide vehicle history reports?",
+        a: "Yes! We provide Carfax or AutoCheck reports for all our vehicles. These reports show accident history, service records, previous owners, and more."
+      },
+      {
+        q: "What does 'Certified Pre-Owned' mean?",
+        a: "Certified Pre-Owned (CPO) vehicles have passed rigorous multi-point inspections, are typically under 5 years old with lower mileage, and come with extended warranty coverage."
+      },
+      {
+        q: "Have your vehicles been inspected?",
+        a: "Yes! Every vehicle undergoes a comprehensive inspection covering mechanical systems, safety features, electronics, and cosmetics before being offered for sale."
+      },
+      {
+        q: "Do you sell vehicles with accidents?",
+        a: "We fully disclose any accident history. Minor accidents that were properly repaired don't affect safety or value significantly. Major accidents are clearly marked and priced accordingly."
+      }
+    ]
+  },
+  {
+    category: "Warranties & Protection",
+    questions: [
+      {
+        q: "Do you offer warranties?",
+        a: "New vehicles come with manufacturer warranties. Used vehicles may have remaining factory warranty, and we offer extended warranty options for all vehicles."
+      },
+      {
+        q: "What does the warranty cover?",
+        a: "Coverage varies by plan. Typical warranties cover engine, transmission, drivetrain, electrical systems, and major components. We'll explain all options in detail."
+      },
+      {
+        q: "Can I buy an extended warranty?",
+        a: "Yes! We offer various extended warranty plans with different coverage levels and terms. You can purchase at time of sale or shortly after."
+      },
+      {
+        q: "What if I have problems after purchase?",
+        a: "Contact us immediately! If covered under warranty, we'll handle repairs at no cost. Even outside warranty, we're committed to helping our customers and offer service at competitive rates."
+      }
+    ]
+  },
+  {
+    category: "Trade-Ins",
+    questions: [
+      {
+        q: "Do you accept trade-ins?",
+        a: "Yes! We accept all makes and models as trade-ins, regardless of condition. Even if you're not buying from us, we'll make offers on vehicles."
+      },
+      {
+        q: "How do you value trade-ins?",
+        a: "We use market data, vehicle condition, mileage, history, and current demand. Our offers are competitive and transparent. Use our online estimator for instant quotes."
+      },
+      {
+        q: "Do I need to pay off my trade-in first?",
+        a: "No! We handle payoffs directly with your lender. If you have equity, it goes toward your purchase. If upside down, we can often roll it into your new loan."
+      },
+      {
+        q: "What condition should my trade-in be in?",
+        a: "We accept vehicles in any condition - running or not, clean or not. Obviously, better condition means better value, but don't hesitate to trade in problem vehicles."
+      }
+    ]
+  },
+  {
+    category: "Delivery & Pickup",
+    questions: [
+      {
+        q: "Can you deliver vehicles?",
+        a: "Yes! We offer local delivery for a nominal fee. For out-of-state buyers, we can arrange transport through trusted carriers."
+      },
+      {
+        q: "What happens at vehicle pickup?",
+        a: "We'll do a complete walk-around, demonstrate all features, ensure you're comfortable, review all paperwork, and answer any questions before you drive away."
+      },
+      {
+        q: "Can I reserve a vehicle?",
+        a: "Yes! Place a deposit (typically $500-$1000) to hold a vehicle. This gives you time to arrange financing, sell your current car, etc. Deposits are refundable if financing falls through."
+      }
+    ]
+  },
+  {
+    category: "After Purchase",
+    questions: [
+      {
+        q: "Do you offer service and repairs?",
+        a: "While we don't have a full service department, we work with trusted local mechanics and can recommend qualified service centers."
+      },
+      {
+        q: "What if I'm not happy with my purchase?",
+        a: "Customer satisfaction is our priority. Contact us within 3 days if you have concerns. While sales are final, we'll work with you to find a solution."
+      },
+      {
+        q: "Can I return or exchange my vehicle?",
+        a: "Returns are evaluated case-by-case. Exchanges are possible if you're not satisfied - we want you in the right vehicle!"
+      },
+      {
+        q: "Do you buy back vehicles?",
+        a: "Yes! If circumstances change and you need to sell, we're interested in buying back vehicles we sold. We'll make fair market offers."
+      }
+    ]
+  }
+];
+---
+
+<Layout title="FAQ - Villacar Autos LLC" description="Frequently asked questions about buying a car from Villacar">
+  <Navbar />
+  
+  <main class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <section class="bg-gradient-to-br from-gray-900 to-gray-800 py-20">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">
+            Frequently Asked <span class="text-red-400">Questions</span>
+          </h1>
+          <p class="text-xl text-gray-300 mb-8">
+            Everything you need to know about buying from Villacar
+          </p>
+          
+          <!-- Search -->
+          <div class="relative max-w-2xl mx-auto">
+            <input 
+              type="text" 
+              id="faqSearch" 
+              placeholder="Search for answers..."
+              class="w-full px-6 py-4 pr-12 rounded-xl border-2 border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:border-red-500 transition"
+            />
+            <svg class="absolute right-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Content -->
+    <section class="py-16">
+      <div class="container mx-auto px-4 max-w-5xl">
+        {faqs.map((category, catIndex) => (
+          <div class="mb-12 faq-category">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+              <span class="w-2 h-8 bg-red-600 rounded mr-4"></span>
+              {category.category}
+            </h2>
+            
+            <div class="space-y-4">
+              {category.questions.map((faq, qIndex) => (
+                <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
+                  <button 
+                    class="faq-question w-full text-left px-6 py-5 flex items-center justify-between hover:bg-gray-50 transition"
+                    data-category={catIndex}
+                    data-question={qIndex}
+                  >
+                    <span class="font-semibold text-gray-900 pr-8">{faq.q}</span>
+                    <svg class="w-6 h-6 text-gray-400 transform transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  
+                  <div class="faq-answer hidden px-6 pb-5 text-gray-600 leading-relaxed">
+                    {faq.a}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        <!-- No Results -->
+        <div id="noResults" class="hidden text-center py-16">
+          <svg class="w-24 h-24 text-gray-300 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">No results found</h3>
+          <p class="text-gray-600 mb-6">Try different keywords or browse all categories above</p>
+          <button 
+            id="clearSearch"
+            class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-semibold"
+          >
+            Clear Search
+          </button>
+        </div>
+
+        <!-- Still Have Questions CTA -->
+        <div class="mt-16 bg-gradient-to-r from-red-600 to-red-700 rounded-2xl p-12 text-white text-center">
+          <h3 class="text-3xl font-bold mb-4">Still Have Questions?</h3>
+          <p class="text-xl text-red-100 mb-8">Our team is here to help you find the perfect vehicle</p>
+          <div class="flex flex-wrap gap-4 justify-center">
+            <a 
+              href="/contact" 
+              class="px-8 py-4 bg-white text-red-600 rounded-xl font-bold hover:bg-gray-100 transition shadow-lg"
+            >
+              Contact Us
+            </a>
+            <a 
+              href="tel:+15055550123" 
+              class="px-8 py-4 border-2 border-white text-white rounded-xl font-bold hover:bg-white/10 transition"
+            >
+              Call (505) 555-0123
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script>
+    // @ts-nocheck
+    // FAQ Toggle
+    document.querySelectorAll('.faq-question').forEach(button => {
+      button.addEventListener('click', () => {
+        const answer = button.nextElementSibling;
+        const icon = button.querySelector('svg');
+        const isOpen = !answer.classList.contains('hidden');
+
+        if (isOpen) {
+          answer.classList.add('hidden');
+          icon.classList.remove('rotate-180');
+        } else {
+          answer.classList.remove('hidden');
+          icon.classList.add('rotate-180');
+        }
+      });
+    });
+
+    // Search
+    const searchInput = document.getElementById('faqSearch');
+    const categories = document.querySelectorAll('.faq-category');
+    const noResults = document.getElementById('noResults');
+
+    searchInput?.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      let hasResults = false;
+
+      if (query === '') {
+        categories.forEach(cat => cat.style.display = 'block');
+        noResults.classList.add('hidden');
+        return;
+      }
+
+      categories.forEach(category => {
+        const items = category.querySelectorAll('.faq-item');
+        let categoryHasResults = false;
+
+        items.forEach(item => {
+          const question = item.querySelector('.faq-question span').textContent.toLowerCase();
+          const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+
+          if (question.includes(query) || answer.includes(query)) {
+            item.style.display = 'block';
+            categoryHasResults = true;
+            hasResults = true;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        category.style.display = categoryHasResults ? 'block' : 'none';
+      });
+
+      noResults.classList.toggle('hidden', hasResults);
+    });
+
+    document.getElementById('clearSearch')?.addEventListener('click', () => {
+      if (searchInput) searchInput.value = '';
+      categories.forEach(cat => cat.style.display = 'block');
+      document.querySelectorAll('.faq-item').forEach(item => item.style.display = 'block');
+      noResults.classList.add('hidden');
+    });
+  </script>
+</Layout>

@@ -1,0 +1,364 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+const blogPosts = [
+  {
+    id: 1,
+    title: "5 Things to Check Before Buying a Used Car",
+    excerpt: "Don't get caught off guard! Here are the essential checks every car buyer should make before making a purchase decision.",
+    date: "2024-01-15",
+    category: "Buying Tips",
+    image: "🔍",
+    readTime: "5 min read",
+    featured: true
+  },
+  {
+    id: 2,
+    title: "New Inventory Alert: 2023 Toyota Camry",
+    excerpt: "Just arrived! Check out our latest addition - a pristine 2023 Toyota Camry with only 15,000 miles. This one won't last long!",
+    date: "2024-01-12",
+    category: "New Arrivals",
+    image: "🚗",
+    readTime: "2 min read",
+    featured: false
+  },
+  {
+    id: 3,
+    title: "How to Get the Best Trade-In Value",
+    excerpt: "Maximize your trade-in value with these expert tips. Learn what dealers look for and how to prepare your vehicle.",
+    date: "2024-01-10",
+    category: "Trade-In Tips",
+    image: "💰",
+    readTime: "6 min read",
+    featured: true
+  },
+  {
+    id: 4,
+    title: "Understanding Car Financing: APR Explained",
+    excerpt: "Confused about APR and financing terms? We break down everything you need to know about car loans in simple language.",
+    date: "2024-01-08",
+    category: "Financing",
+    image: "📊",
+    readTime: "7 min read",
+    featured: false
+  },
+  {
+    id: 5,
+    title: "SUV vs Sedan: Which is Right for You?",
+    excerpt: "Choosing between an SUV and sedan? We compare fuel economy, safety, space, and more to help you decide.",
+    date: "2024-01-05",
+    category: "Vehicle Comparisons",
+    image: "🚙",
+    readTime: "8 min read",
+    featured: true
+  },
+  {
+    id: 6,
+    title: "Winter Driving Safety Tips",
+    excerpt: "Prepare for winter weather with our comprehensive guide to safe driving in snow and ice conditions.",
+    date: "2024-01-03",
+    category: "Safety",
+    image: "❄️",
+    readTime: "5 min read",
+    featured: false
+  },
+  {
+    id: 7,
+    title: "Customer Spotlight: Meet the Johnson Family",
+    excerpt: "The Johnson family shares their experience buying their dream minivan from Villacar. Read their story!",
+    date: "2023-12-28",
+    category: "Customer Stories",
+    image: "👨‍👩‍👧‍👦",
+    readTime: "4 min read",
+    featured: false
+  },
+  {
+    id: 8,
+    title: "Top 10 Most Reliable Used Cars in 2024",
+    excerpt: "Looking for reliability? Our expert team reveals the most dependable used vehicles on the market right now.",
+    date: "2023-12-22",
+    category: "Buying Tips",
+    image: "⭐",
+    readTime: "9 min read",
+    featured: true
+  }
+];
+
+const categories = [...new Set(blogPosts.map(post => post.category))];
+---
+
+<Layout title="Blog & News - Villacar Autos LLC" description="Latest news, tips, and updates from Villacar">
+  <Navbar />
+  
+  <main class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <section class="bg-gradient-to-br from-gray-900 to-gray-800 py-20">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <span class="inline-block px-4 py-2 bg-red-600 text-white rounded-full text-sm font-bold mb-4">
+            📰 BLOG & NEWS
+          </span>
+          <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">
+            Latest Updates & <span class="text-red-400">Expert Tips</span>
+          </h1>
+          <p class="text-xl text-gray-300">
+            Stay informed with car buying advice, new arrivals, and dealership news
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter -->
+    <section class="bg-white border-b-2 border-gray-200 sticky top-0 z-10 shadow-sm">
+      <div class="container mx-auto px-4 py-4">
+        <div class="flex flex-wrap gap-3 justify-center">
+          <button 
+            class="filter-btn px-6 py-2 rounded-full font-semibold transition active"
+            data-category="all"
+          >
+            All Posts
+          </button>
+          {categories.map(category => (
+            <button 
+              class="filter-btn px-6 py-2 rounded-full font-semibold transition"
+              data-category={category}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section class="py-16">
+      <div class="container mx-auto px-4 max-w-7xl">
+        <!-- Featured Posts -->
+        <div class="mb-16">
+          <h2 class="text-3xl font-bold text-gray-900 mb-8 flex items-center">
+            <span class="w-2 h-8 bg-red-600 rounded mr-4"></span>
+            Featured Articles
+          </h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {blogPosts.filter(post => post.featured).map(post => (
+              <article 
+                class="blog-post bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden cursor-pointer"
+                data-category={post.category}
+                data-post-id={post.id}
+              >
+                <div class="p-8">
+                  <div class="text-6xl mb-4">{post.image}</div>
+                  <div class="flex items-center gap-3 mb-4">
+                    <span class="px-3 py-1 bg-red-100 text-red-600 rounded-full text-xs font-bold">
+                      {post.category}
+                    </span>
+                    <span class="text-sm text-gray-500">{post.readTime}</span>
+                  </div>
+                  <h3 class="text-2xl font-bold text-gray-900 mb-3 line-clamp-2">
+                    {post.title}
+                  </h3>
+                  <p class="text-gray-600 mb-4 line-clamp-3 leading-relaxed">
+                    {post.excerpt}
+                  </p>
+                  <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+                    <span class="text-sm text-gray-500">
+                      {new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                    </span>
+                    <span class="text-red-600 font-semibold hover:text-red-700">
+                      Read More →
+                    </span>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <!-- All Posts -->
+        <div>
+          <h2 class="text-3xl font-bold text-gray-900 mb-8 flex items-center">
+            <span class="w-2 h-8 bg-red-600 rounded mr-4"></span>
+            All Articles
+          </h2>
+          <div class="space-y-6">
+            {blogPosts.filter(post => !post.featured).map(post => (
+              <article 
+                class="blog-post bg-white rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer overflow-hidden"
+                data-category={post.category}
+                data-post-id={post.id}
+              >
+                <div class="p-6 md:flex items-center gap-6">
+                  <div class="text-5xl mb-4 md:mb-0">{post.image}</div>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-3 mb-3">
+                      <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-bold">
+                        {post.category}
+                      </span>
+                      <span class="text-sm text-gray-500">{post.readTime}</span>
+                      <span class="text-sm text-gray-500">
+                        {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      </span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">
+                      {post.title}
+                    </h3>
+                    <p class="text-gray-600 line-clamp-2">
+                      {post.excerpt}
+                    </p>
+                  </div>
+                  <div>
+                    <button class="text-red-600 font-semibold hover:text-red-700 flex items-center gap-2">
+                      Read More
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <!-- No Results -->
+        <div id="noResults" class="hidden text-center py-16">
+          <div class="text-6xl mb-6">📭</div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">No posts in this category</h3>
+          <p class="text-gray-600 mb-6">Try selecting a different category</p>
+          <button 
+            id="showAll"
+            class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-semibold"
+          >
+            Show All Posts
+          </button>
+        </div>
+
+        <!-- Newsletter Signup -->
+        <div class="mt-16 bg-gradient-to-r from-red-600 to-red-700 rounded-2xl p-12 text-white text-center">
+          <h3 class="text-3xl font-bold mb-4">Never Miss an Update</h3>
+          <p class="text-xl text-red-100 mb-8">Get the latest tips, news, and deals delivered to your inbox</p>
+          <form id="newsletterForm" class="max-w-md mx-auto flex gap-3">
+            <input 
+              type="email" 
+              name="email"
+              required
+              placeholder="Enter your email"
+              class="flex-1 px-6 py-4 rounded-xl text-gray-900 focus:outline-none focus:ring-4 focus:ring-white/30"
+            />
+            <button 
+              type="submit"
+              class="px-8 py-4 bg-white text-red-600 rounded-xl font-bold hover:bg-gray-100 transition shadow-lg"
+            >
+              Subscribe
+            </button>
+          </form>
+          <div id="newsletterSuccess" class="hidden mt-4 text-yellow-300 font-semibold">
+            ✓ Thanks for subscribing!
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script>
+    // @ts-nocheck
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const blogPosts = document.querySelectorAll('.blog-post');
+    const noResults = document.getElementById('noResults');
+
+    // Filter functionality
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const category = button.dataset.category;
+        
+        // Update active state
+        filterButtons.forEach(btn => {
+          btn.classList.remove('active', 'bg-red-600', 'text-white');
+          btn.classList.add('bg-gray-100', 'text-gray-600', 'hover:bg-gray-200');
+        });
+        button.classList.add('active', 'bg-red-600', 'text-white');
+        button.classList.remove('bg-gray-100', 'text-gray-600', 'hover:bg-gray-200');
+
+        // Filter posts
+        let hasVisible = false;
+        blogPosts.forEach(post => {
+          if (category === 'all' || post.dataset.category === category) {
+            post.style.display = 'block';
+            hasVisible = true;
+          } else {
+            post.style.display = 'none';
+          }
+        });
+
+        // Show/hide no results
+        noResults?.classList.toggle('hidden', hasVisible);
+      });
+    });
+
+    // Show all posts button
+    document.getElementById('showAll')?.addEventListener('click', () => {
+      filterButtons[0].click(); // Click "All Posts" button
+    });
+
+    // Click posts to view (demo - would link to actual post pages)
+    blogPosts.forEach(post => {
+      post.addEventListener('click', () => {
+        const postId = post.dataset.postId;
+        alert(`This would navigate to blog post #${postId}. In production, each post would have its own page!`);
+      });
+    });
+
+    // Newsletter signup
+    const newsletterForm = document.getElementById('newsletterForm');
+    const newsletterSuccess = document.getElementById('newsletterSuccess');
+
+    newsletterForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(newsletterForm);
+      const email = formData.get('email');
+
+      // Store subscription
+      const subscribers = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
+      if (!subscribers.includes(email)) {
+        subscribers.push(email);
+        localStorage.setItem('newsletterSubscribers', JSON.stringify(subscribers));
+      }
+
+      newsletterSuccess?.classList.remove('hidden');
+      newsletterForm.reset();
+
+      setTimeout(() => {
+        newsletterSuccess?.classList.add('hidden');
+      }, 5000);
+    });
+
+    // Set initial active state
+    filterButtons[0].classList.add('bg-red-600', 'text-white');
+    filterButtons[0].classList.remove('bg-gray-100', 'text-gray-600');
+  </script>
+
+  <style>
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .line-clamp-3 {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .filter-btn:not(.active) {
+      @apply bg-gray-100 text-gray-600 hover:bg-gray-200;
+    }
+  </style>
+</Layout>

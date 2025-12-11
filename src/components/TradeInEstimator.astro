@@ -1,0 +1,308 @@
+---
+---
+
+<div class="bg-gradient-to-br from-orange-50 to-white rounded-2xl shadow-xl p-8">
+  <div class="flex items-center gap-3 mb-6">
+    <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+    </svg>
+    <h2 class="text-3xl font-bold text-gray-900">Trade-In Estimator</h2>
+  </div>
+  
+  <p class="text-gray-600 mb-8">Get an instant estimate for your current vehicle</p>
+
+  <form id="tradeInForm" class="space-y-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label for="tradeYear" class="block text-sm font-medium text-gray-700 mb-2">
+          Year *
+        </label>
+        <input 
+          type="number" 
+          id="tradeYear" 
+          required
+          min="1990"
+          max="2025"
+          placeholder="2020"
+          class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+        />
+      </div>
+
+      <div>
+        <label for="tradeMake" class="block text-sm font-medium text-gray-700 mb-2">
+          Make *
+        </label>
+        <input 
+          type="text" 
+          id="tradeMake" 
+          required
+          placeholder="Toyota"
+          class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+        />
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label for="tradeModel" class="block text-sm font-medium text-gray-700 mb-2">
+          Model *
+        </label>
+        <input 
+          type="text" 
+          id="tradeModel" 
+          required
+          placeholder="Camry"
+          class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+        />
+      </div>
+
+      <div>
+        <label for="tradeMileage" class="block text-sm font-medium text-gray-700 mb-2">
+          Mileage *
+        </label>
+        <input 
+          type="number" 
+          id="tradeMileage" 
+          required
+          placeholder="50000"
+          class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+        />
+      </div>
+    </div>
+
+    <div>
+      <label for="tradeCondition" class="block text-sm font-medium text-gray-700 mb-2">
+        Overall Condition *
+      </label>
+      <select 
+        id="tradeCondition" 
+        required
+        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+      >
+        <option value="">Select condition</option>
+        <option value="excellent">Excellent - Like new, no visible wear</option>
+        <option value="good">Good - Minor wear, well maintained</option>
+        <option value="fair">Fair - Normal wear, some cosmetic issues</option>
+        <option value="poor">Poor - Significant wear or mechanical issues</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="tradeVIN" class="block text-sm font-medium text-gray-700 mb-2">
+        VIN <span class="text-gray-400">(Optional)</span>
+      </label>
+      <input 
+        type="text" 
+        id="tradeVIN" 
+        placeholder="1HGBH41JXMN109186"
+        maxlength="17"
+        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+      />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+        Additional Features (Check all that apply)
+      </label>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+        <label class="flex items-center gap-2">
+          <input type="checkbox" id="feature_leather" class="rounded text-orange-600 focus:ring-orange-500" />
+          <span class="text-sm">Leather Seats</span>
+        </label>
+        <label class="flex items-center gap-2">
+          <input type="checkbox" id="feature_sunroof" class="rounded text-orange-600 focus:ring-orange-500" />
+          <span class="text-sm">Sunroof</span>
+        </label>
+        <label class="flex items-center gap-2">
+          <input type="checkbox" id="feature_nav" class="rounded text-orange-600 focus:ring-orange-500" />
+          <span class="text-sm">Navigation</span>
+        </label>
+        <label class="flex items-center gap-2">
+          <input type="checkbox" id="feature_backup" class="rounded text-orange-600 focus:ring-orange-500" />
+          <span class="text-sm">Backup Camera</span>
+        </label>
+        <label class="flex items-center gap-2">
+          <input type="checkbox" id="feature_heated" class="rounded text-orange-600 focus:ring-orange-500" />
+          <span class="text-sm">Heated Seats</span>
+        </label>
+        <label class="flex items-center gap-2">
+          <input type="checkbox" id="feature_awd" class="rounded text-orange-600 focus:ring-orange-500" />
+          <span class="text-sm">AWD/4WD</span>
+        </label>
+      </div>
+    </div>
+
+    <div>
+      <label for="tradeNotes" class="block text-sm font-medium text-gray-700 mb-2">
+        Additional Notes <span class="text-gray-400">(Optional)</span>
+      </label>
+      <textarea 
+        id="tradeNotes" 
+        rows="3"
+        placeholder="Describe any damage, modifications, or special features..."
+        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+      ></textarea>
+    </div>
+
+    <div class="border-t pt-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-4">Contact Information</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="tradeName" class="block text-sm font-medium text-gray-700 mb-2">
+            Full Name *
+          </label>
+          <input 
+            type="text" 
+            id="tradeName" 
+            required
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+          />
+        </div>
+
+        <div>
+          <label for="tradePhone" class="block text-sm font-medium text-gray-700 mb-2">
+            Phone Number *
+          </label>
+          <input 
+            type="tel" 
+            id="tradePhone" 
+            required
+            placeholder="(505) 555-0123"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+          />
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <label for="tradeEmail" class="block text-sm font-medium text-gray-700 mb-2">
+          Email Address *
+        </label>
+        <input 
+          type="email" 
+          id="tradeEmail" 
+          required
+          class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+        />
+      </div>
+    </div>
+
+    <button 
+      type="submit"
+      class="w-full bg-gradient-to-r from-orange-600 to-orange-700 text-white py-4 rounded-xl font-bold text-lg hover:from-orange-700 hover:to-orange-800 transition shadow-lg"
+    >
+      Get My Trade-In Estimate
+    </button>
+
+    <p class="text-xs text-gray-500 text-center">
+      * Our team will review your information and contact you with a personalized estimate within 24 hours
+    </p>
+  </form>
+
+  <!-- Estimate Result (shown after submission) -->
+  <div id="tradeInResult" class="hidden mt-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border-2 border-green-200">
+    <h3 class="text-2xl font-bold text-gray-900 mb-4">Estimated Trade-In Value</h3>
+    
+    <div class="bg-white rounded-lg p-6 mb-4">
+      <p class="text-gray-600 text-sm mb-2">Estimated Range</p>
+      <p id="estimateRange" class="text-4xl font-bold text-green-600">$0 - $0</p>
+    </div>
+
+    <div class="bg-white rounded-lg p-4">
+      <p class="text-sm text-gray-600 mb-2">
+        ✅ Your request has been submitted. Our team will contact you within 24 hours with a more accurate quote after reviewing your vehicle details.
+      </p>
+      <p class="text-xs text-gray-500">
+        Final trade-in value will be determined after a physical inspection of your vehicle.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // @ts-nocheck
+  document.getElementById('tradeInForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const year = parseInt(document.getElementById('tradeYear').value);
+    const make = document.getElementById('tradeMake').value;
+    const model = document.getElementById('tradeModel').value;
+    const mileage = parseInt(document.getElementById('tradeMileage').value);
+    const condition = document.getElementById('tradeCondition').value;
+
+    // Simple estimation algorithm (in production, use real valuation API)
+    const age = 2025 - year;
+    let baseValue = 25000; // Starting value
+    
+    // Depreciation by age
+    baseValue -= age * 1500;
+    
+    // Mileage adjustment
+    if (mileage < 30000) baseValue += 2000;
+    else if (mileage > 100000) baseValue -= 5000;
+    else baseValue -= (mileage / 10000) * 500;
+    
+    // Condition adjustment
+    const conditionMultiplier = {
+      excellent: 1.15,
+      good: 1.0,
+      fair: 0.85,
+      poor: 0.6
+    };
+    baseValue *= conditionMultiplier[condition] || 1.0;
+
+    // Features bonus
+    const features = ['leather', 'sunroof', 'nav', 'backup', 'heated', 'awd'];
+    let featureBonus = 0;
+    features.forEach(feature => {
+      if (document.getElementById(`feature_${feature}`)?.checked) {
+        featureBonus += 500;
+      }
+    });
+    baseValue += featureBonus;
+
+    // Ensure minimum value
+    baseValue = Math.max(baseValue, 1000);
+
+    const lowEstimate = Math.floor(baseValue * 0.9);
+    const highEstimate = Math.floor(baseValue * 1.1);
+
+    // Collect all form data
+    const formData = {
+      vehicle: {
+        year,
+        make,
+        model,
+        mileage,
+        condition,
+        vin: document.getElementById('tradeVIN').value,
+        features: features.filter(f => document.getElementById(`feature_${f}`)?.checked),
+        notes: document.getElementById('tradeNotes').value
+      },
+      contact: {
+        name: document.getElementById('tradeName').value,
+        phone: document.getElementById('tradePhone').value,
+        email: document.getElementById('tradeEmail').value
+      },
+      estimate: {
+        low: lowEstimate,
+        high: highEstimate
+      },
+      submittedAt: new Date().toISOString()
+    };
+
+    // Store in localStorage (in production, send to backend)
+    const tradeIns = JSON.parse(localStorage.getItem('tradeInRequests') || '[]');
+    tradeIns.push(formData);
+    localStorage.setItem('tradeInRequests', JSON.stringify(tradeIns));
+
+    // Show estimate
+    document.getElementById('estimateRange').textContent = 
+      `$${lowEstimate.toLocaleString()} - $${highEstimate.toLocaleString()}`;
+    document.getElementById('tradeInResult').classList.remove('hidden');
+
+    // Scroll to result
+    document.getElementById('tradeInResult')?.scrollIntoView({ behavior: 'smooth' });
+
+    alert(`✅ Trade-In Request Submitted!\n\nEstimated Value: $${lowEstimate.toLocaleString()} - $${highEstimate.toLocaleString()}\n\nWe'll contact you at ${formData.contact.phone} within 24 hours with a more accurate quote.`);
+  });
+</script>

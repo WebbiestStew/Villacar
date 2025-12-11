@@ -1,0 +1,222 @@
+---
+const { car } = Astro.props;
+---
+
+<button 
+  data-testdrive-btn
+  data-car-id={car.id}
+  data-car-name={`${car.year} ${car.make} ${car.model}`}
+  class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg hover:from-green-700 hover:to-green-800 transition shadow-lg font-medium"
+>
+  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+  </svg>
+  Schedule Test Drive
+</button>
+
+<!-- Test Drive Modal -->
+<div id="testDriveModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 items-center justify-center p-4">
+  <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div class="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center">
+      <h3 id="testDriveModalTitle" class="text-2xl font-bold text-gray-900">Schedule Test Drive</h3>
+      <button id="closeTestDriveModal" class="text-gray-400 hover:text-gray-600 transition">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <form id="testDriveForm" class="p-6 space-y-6">
+      <input type="hidden" id="testDriveCarId" />
+      <input type="hidden" id="testDriveCarName" />
+
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <p class="text-blue-800 font-medium">Vehicle: <span id="selectedCarDisplay"></span></p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="testDriveName" class="block text-sm font-medium text-gray-700 mb-2">
+            Full Name *
+          </label>
+          <input 
+            type="text" 
+            id="testDriveName" 
+            required
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+          />
+        </div>
+
+        <div>
+          <label for="testDrivePhone" class="block text-sm font-medium text-gray-700 mb-2">
+            Phone Number *
+          </label>
+          <input 
+            type="tel" 
+            id="testDrivePhone" 
+            required
+            placeholder="(505) 555-0123"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label for="testDriveEmail" class="block text-sm font-medium text-gray-700 mb-2">
+          Email Address *
+        </label>
+        <input 
+          type="email" 
+          id="testDriveEmail" 
+          required
+          class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="testDriveDate" class="block text-sm font-medium text-gray-700 mb-2">
+            Preferred Date *
+          </label>
+          <input 
+            type="date" 
+            id="testDriveDate" 
+            required
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+          />
+        </div>
+
+        <div>
+          <label for="testDriveTime" class="block text-sm font-medium text-gray-700 mb-2">
+            Preferred Time *
+          </label>
+          <select 
+            id="testDriveTime" 
+            required
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            <option value="">Select time</option>
+            <option value="9:00 AM">9:00 AM</option>
+            <option value="10:00 AM">10:00 AM</option>
+            <option value="11:00 AM">11:00 AM</option>
+            <option value="12:00 PM">12:00 PM</option>
+            <option value="1:00 PM">1:00 PM</option>
+            <option value="2:00 PM">2:00 PM</option>
+            <option value="3:00 PM">3:00 PM</option>
+            <option value="4:00 PM">4:00 PM</option>
+            <option value="5:00 PM">5:00 PM</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label for="testDriveNotes" class="block text-sm font-medium text-gray-700 mb-2">
+          Additional Notes <span class="text-gray-400">(Optional)</span>
+        </label>
+        <textarea 
+          id="testDriveNotes" 
+          rows="3"
+          placeholder="Any specific questions or requirements?"
+          class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+        ></textarea>
+      </div>
+
+      <div class="flex gap-4">
+        <button 
+          type="submit"
+          class="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white py-3 rounded-lg font-bold hover:from-green-700 hover:to-green-800 transition shadow-lg"
+        >
+          Submit Request
+        </button>
+        <button 
+          type="button"
+          id="cancelTestDrive"
+          class="px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium"
+        >
+          Cancel
+        </button>
+      </div>
+
+      <p class="text-xs text-gray-500 text-center">
+        We'll contact you within 24 hours to confirm your test drive appointment
+      </p>
+    </form>
+  </div>
+</div>
+
+<style>
+  #testDriveModal:not(.hidden) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+
+<script>
+  // @ts-nocheck
+  const modal = document.getElementById('testDriveModal');
+  const form = document.getElementById('testDriveForm');
+  const closeBtn = document.getElementById('closeTestDriveModal');
+  const cancelBtn = document.getElementById('cancelTestDrive');
+
+  // Set minimum date to today
+  const dateInput = document.getElementById('testDriveDate');
+  if (dateInput) {
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.min = today;
+  }
+
+  // Open modal when test drive button clicked
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-testdrive-btn]');
+    if (btn) {
+      const carId = btn.dataset.carId;
+      const carName = btn.dataset.carName;
+      
+      document.getElementById('testDriveCarId').value = carId;
+      document.getElementById('testDriveCarName').value = carName;
+      document.getElementById('selectedCarDisplay').textContent = carName;
+      document.getElementById('testDriveModalTitle').textContent = `Schedule Test Drive`;
+      
+      modal?.classList.remove('hidden');
+    }
+  });
+
+  // Close modal
+  closeBtn?.addEventListener('click', () => modal?.classList.add('hidden'));
+  cancelBtn?.addEventListener('click', () => modal?.classList.add('hidden'));
+
+  // Close on outside click
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.add('hidden');
+  });
+
+  // Form submission
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const formData = {
+      carId: document.getElementById('testDriveCarId').value,
+      carName: document.getElementById('testDriveCarName').value,
+      name: document.getElementById('testDriveName').value,
+      phone: document.getElementById('testDrivePhone').value,
+      email: document.getElementById('testDriveEmail').value,
+      date: document.getElementById('testDriveDate').value,
+      time: document.getElementById('testDriveTime').value,
+      notes: document.getElementById('testDriveNotes').value,
+      submittedAt: new Date().toISOString()
+    };
+
+    // Store in localStorage (in production, send to backend)
+    const testDrives = JSON.parse(localStorage.getItem('testDriveRequests') || '[]');
+    testDrives.push(formData);
+    localStorage.setItem('testDriveRequests', JSON.stringify(testDrives));
+
+    // Show success message
+    alert(`✅ Test Drive Request Submitted!\n\nVehicle: ${formData.carName}\nDate: ${formData.date} at ${formData.time}\n\nWe'll contact you at ${formData.phone} to confirm your appointment.`);
+
+    // Reset form and close modal
+    form.reset();
+    modal?.classList.add('hidden');
+  });
+</script>

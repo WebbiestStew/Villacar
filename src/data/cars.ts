@@ -15,6 +15,7 @@ export interface Car {
   images: string[];
   isFeatured: boolean;
   vin: string;
+  status?: 'Available' | 'Sale Pending' | 'Sold' | 'Coming Soon';
 }
 
 export const cars: Car[] = [

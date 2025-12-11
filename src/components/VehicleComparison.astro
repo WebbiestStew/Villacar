@@ -1,0 +1,184 @@
+---
+---
+
+<div class="bg-gradient-to-br from-purple-50 to-white rounded-2xl shadow-xl p-8">
+  <div class="flex items-center gap-3 mb-6">
+    <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+    </svg>
+    <h2 class="text-3xl font-bold text-gray-900">Compare Vehicles</h2>
+  </div>
+  
+  <p class="text-gray-600 mb-6">Select up to 3 vehicles to compare side-by-side</p>
+
+  <!-- Selected Vehicles Display -->
+  <div id="compareSlots" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center text-gray-400">
+      <p class="text-sm">Select a vehicle from inventory</p>
+    </div>
+    <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center text-gray-400">
+      <p class="text-sm">Select a second vehicle</p>
+    </div>
+    <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center text-gray-400">
+      <p class="text-sm">Select a third vehicle</p>
+    </div>
+  </div>
+
+  <!-- Comparison Table -->
+  <div id="comparisonTable" class="hidden overflow-x-auto">
+    <table class="w-full border-collapse">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="px-4 py-3 text-left font-semibold text-gray-700">Feature</th>
+          <th id="col1Header" class="px-4 py-3 text-center font-semibold text-gray-700"></th>
+          <th id="col2Header" class="px-4 py-3 text-center font-semibold text-gray-700"></th>
+          <th id="col3Header" class="px-4 py-3 text-center font-semibold text-gray-700"></th>
+        </tr>
+      </thead>
+      <tbody id="comparisonBody" class="divide-y divide-gray-200">
+        <!-- Will be populated by JavaScript -->
+      </tbody>
+    </table>
+  </div>
+
+  <button 
+    id="clearComparison"
+    class="mt-6 px-6 py-3 border-2 border-purple-600 text-purple-600 rounded-lg hover:bg-purple-50 transition font-medium"
+  >
+    Clear Comparison
+  </button>
+</div>
+
+<script>
+  // @ts-nocheck
+  const compareList = [];
+  const maxCompare = 3;
+
+  function updateComparisonUI() {
+    const slots = document.getElementById('compareSlots');
+    const table = document.getElementById('comparisonTable');
+    
+    if (compareList.length === 0) {
+      table?.classList.add('hidden');
+      return;
+    }
+
+    // Show comparison table
+    if (compareList.length >= 2) {
+      table?.classList.remove('hidden');
+      buildComparisonTable();
+    }
+
+    // Update slots display
+    if (slots) {
+      slots.innerHTML = '';
+      for (let i = 0; i < maxCompare; i++) {
+        const car = compareList[i];
+        if (car) {
+          slots.innerHTML += `
+            <div class="border-2 border-purple-500 rounded-lg p-4 bg-white">
+              <img src="${car.images[0]}" alt="${car.make} ${car.model}" class="w-full h-32 object-cover rounded-lg mb-2" />
+              <p class="font-semibold">${car.year} ${car.make} ${car.model}</p>
+              <p class="text-sm text-gray-600">$${car.price.toLocaleString()}</p>
+              <button onclick="removeFromCompare(${i})" class="mt-2 text-xs text-red-600 hover:text-red-700">Remove</button>
+            </div>
+          `;
+        } else {
+          slots.innerHTML += `
+            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center text-gray-400">
+              <p class="text-sm">Select vehicle #${i + 1}</p>
+            </div>
+          `;
+        }
+      }
+    }
+
+    // Update compare button badges
+    updateCompareBadges();
+  }
+
+  function buildComparisonTable() {
+    const tbody = document.getElementById('comparisonBody');
+    if (!tbody) return;
+
+    const features = [
+      { label: 'Price', key: 'price', format: (v) => `$${v.toLocaleString()}` },
+      { label: 'Year', key: 'year' },
+      { label: 'Mileage', key: 'mileage', format: (v) => `${v.toLocaleString()} mi` },
+      { label: 'Condition', key: 'condition' },
+      { label: 'Body Type', key: 'bodyType' },
+      { label: 'Fuel Type', key: 'fuelType' },
+      { label: 'Transmission', key: 'transmission' },
+      { label: 'Color', key: 'color' },
+    ];
+
+    tbody.innerHTML = features.map(feature => {
+      const values = compareList.map(car => {
+        if (!car) return '';
+        const value = car[feature.key];
+        return feature.format ? feature.format(value) : value;
+      });
+
+      return `
+        <tr>
+          <td class="px-4 py-3 font-medium text-gray-700">${feature.label}</td>
+          ${values.map(v => `<td class="px-4 py-3 text-center">${v}</td>`).join('')}
+          ${values.length < maxCompare ? '<td class="px-4 py-3"></td>'.repeat(maxCompare - values.length) : ''}
+        </tr>
+      `;
+    }).join('');
+
+    // Update headers
+    compareList.forEach((car, i) => {
+      const header = document.getElementById(`col${i + 1}Header`);
+      if (header) {
+        header.textContent = car ? `${car.year} ${car.make} ${car.model}` : '';
+      }
+    });
+  }
+
+  function addToCompare(carData) {
+    if (compareList.length >= maxCompare) {
+      alert(`You can only compare up to ${maxCompare} vehicles at once`);
+      return;
+    }
+
+    // Check if already in comparison
+    if (compareList.some(car => car && car.id === carData.id)) {
+      alert('This vehicle is already in your comparison');
+      return;
+    }
+
+    compareList.push(carData);
+    updateComparisonUI();
+    
+    // Scroll to comparison section
+    document.querySelector('[data-comparison-section]')?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function removeFromCompare(index) {
+    compareList.splice(index, 1);
+    updateComparisonUI();
+  }
+
+  function updateCompareBadges() {
+    document.querySelectorAll('.compare-badge').forEach(badge => {
+      const count = compareList.length;
+      if (count > 0) {
+        badge.textContent = count;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    });
+  }
+
+  document.getElementById('clearComparison')?.addEventListener('click', () => {
+    compareList.length = 0;
+    updateComparisonUI();
+  });
+
+  // Make functions globally available
+  window.addToCompare = addToCompare;
+  window.removeFromCompare = removeFromCompare;
+</script>
