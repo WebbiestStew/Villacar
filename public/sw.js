@@ -15,11 +15,8 @@ const PRECACHE_ASSETS = [
 
 // Install event - cache essential assets
 self.addEventListener('install', (event) => {
-  console.log('[Service Worker] Installing...');
-  
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[Service Worker] Precaching app shell');
       return cache.addAll(PRECACHE_ASSETS);
     })
   );
@@ -30,17 +27,12 @@ self.addEventListener('install', (event) => {
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
-  console.log('[Service Worker] Activating...');
-  
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames
           .filter((cacheName) => cacheName !== CACHE_NAME)
-          .map((cacheName) => {
-            console.log('[Service Worker] Deleting old cache:', cacheName);
-            return caches.delete(cacheName);
-          })
+          .map((cacheName) => caches.delete(cacheName))
       );
     })
   );
@@ -65,7 +57,6 @@ self.addEventListener('fetch', (event) => {
     caches.match(event.request).then((cachedResponse) => {
       // Return cached response if found
       if (cachedResponse) {
-        console.log('[Service Worker] Serving from cache:', event.request.url);
         return cachedResponse;
       }
 
@@ -84,7 +75,6 @@ self.addEventListener('fetch', (event) => {
           caches.open(CACHE_NAME).then((cache) => {
             // Only cache same-origin requests
             if (event.request.url.startsWith(self.location.origin)) {
-              console.log('[Service Worker] Caching new resource:', event.request.url);
               cache.put(event.request, responseToCache);
             }
           });
@@ -129,8 +119,6 @@ self.addEventListener('message', (event) => {
 
 // Background sync for offline actions (future enhancement)
 self.addEventListener('sync', (event) => {
-  console.log('[Service Worker] Background sync:', event.tag);
-  
   if (event.tag === 'sync-inquiries') {
     event.waitUntil(syncInquiries());
   }
@@ -140,18 +128,14 @@ self.addEventListener('sync', (event) => {
 async function syncInquiries() {
   try {
     // In a real implementation, this would send queued inquiries to a server
-    console.log('[Service Worker] Syncing inquiries...');
     return Promise.resolve();
   } catch (error) {
-    console.error('[Service Worker] Sync failed:', error);
     return Promise.reject(error);
   }
 }
 
 // Push notification handler (future enhancement)
 self.addEventListener('push', (event) => {
-  console.log('[Service Worker] Push received:', event);
-  
   const options = {
     body: event.data ? event.data.text() : 'New update from Villacar!',
     icon: '/icons/icon-192x192.png',
@@ -182,8 +166,6 @@ self.addEventListener('push', (event) => {
 
 // Notification click handler
 self.addEventListener('notificationclick', (event) => {
-  console.log('[Service Worker] Notification clicked:', event.action);
-  
   event.notification.close();
 
   if (event.action === 'explore') {

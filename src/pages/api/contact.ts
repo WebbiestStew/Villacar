@@ -53,16 +53,8 @@ Submitted on: ${new Date().toLocaleString('en-US', {
       `.trim()
     };
 
-    // For now, we'll log the email content and return success
-    // In production, you would integrate with an email service like:
-    // - SendGrid
-    // - Resend
-    // - AWS SES
-    // - Nodemailer with SMTP
-    
-    console.log('Email to be sent:', emailContent);
-
-    // Simulate email sending
+    // In production, integrate with an email service like:
+    // SendGrid, Resend, AWS SES, or Nodemailer with SMTP
     // await sendEmail(emailContent);
 
     return new Response(

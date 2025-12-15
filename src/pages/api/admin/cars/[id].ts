@@ -2,6 +2,8 @@ import type { APIRoute } from 'astro';
 import fs from 'fs/promises';
 import path from 'path';
 
+export const prerender = false;
+
 const carsFilePath = path.join(process.cwd(), 'src/data/cars.ts');
 
 async function readCarsFile() {
