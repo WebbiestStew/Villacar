@@ -4,7 +4,6 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import SearchFilters from '../components/SearchFilters.astro';
 import FinancingCalculator from '../components/FinancingCalculator.astro';
-import VehicleComparison from '../components/VehicleComparison.astro';
 import TradeInEstimator from '../components/TradeInEstimator.astro';
 import TestDriveScheduler from '../components/TestDriveScheduler.astro';
 import { cars, type Car } from '../data/cars';
@@ -46,15 +45,6 @@ const bodyTypes = [...new Set(cars.map(car => car.bodyType))].sort();
             Showing <span id="vehicleCount" class="font-bold text-gray-900">{cars.length}</span> vehicles
           </p>
           <div class="flex items-center space-x-4">
-            <a 
-              href="/compare" 
-              class="inline-flex items-center gap-2 px-6 py-2 border-2 border-custom-red text-custom-red rounded-lg hover:bg-custom-red hover:text-white transition-all duration-200 font-semibold"
-            >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-              </svg>
-              Compare Vehicles
-            </a>
             <label class="text-gray-700">Sort by:</label>
             <select id="sortSelect" class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500">
               <option value="price-low">Price: Low to High</option>
@@ -173,13 +163,6 @@ const bodyTypes = [...new Set(cars.map(car => car.bodyType))].sort();
             Contact Us Today
           </a>
         </div>
-      </div>
-    </section>
-
-    <!-- Vehicle Comparison Section -->
-    <section class="py-16 bg-white" data-comparison-section>
-      <div class="container mx-auto px-4">
-        <VehicleComparison />
       </div>
     </section>
 

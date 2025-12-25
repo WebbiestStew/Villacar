@@ -32,12 +32,6 @@ const currentPath = Astro.url.pathname;
         >
           Inventory
         </a>
-        <a 
-          href="/compare" 
-          class={`${currentPath === '/compare' ? 'text-red-600 bg-red-50' : 'text-gray-700 hover:text-red-600 hover:bg-red-50'} px-5 py-2.5 text-base font-semibold transition-all duration-300 rounded-xl`}
-        >
-          Compare
-        </a>
         <a
           href="/about" 
           class={`${currentPath === '/about' ? 'text-red-600 bg-red-50' : 'text-gray-700 hover:text-red-600 hover:bg-red-50'} px-5 py-2.5 text-base font-semibold transition-all duration-300 rounded-xl`}
@@ -115,7 +109,6 @@ const currentPath = Astro.url.pathname;
     <div class="px-6 py-6 space-y-2">
       <a href="/" class="block text-gray-700 hover:bg-red-50 hover:text-red-600 px-5 py-3 rounded-xl text-base font-medium transition-all">Home</a>
       <a href="/inventory" class="block text-gray-700 hover:bg-red-50 hover:text-red-600 px-5 py-3 rounded-xl text-base font-medium transition-all">Inventory</a>
-      <a href="/compare" class="block text-gray-700 hover:bg-red-50 hover:text-red-600 px-5 py-3 rounded-xl text-base font-medium transition-all">Compare</a>
       <a href="/wishlist" class="block text-gray-700 hover:bg-red-50 hover:text-red-600 px-5 py-3 rounded-xl text-base font-medium transition-all">Wishlist</a>
       <a href="/about" class="block text-gray-700 hover:bg-red-50 hover:text-red-600 px-5 py-3 rounded-xl text-base font-medium transition-all">About</a>
       <a href="/financing" class="block text-gray-700 hover:bg-red-50 hover:text-red-600 px-5 py-3 rounded-xl text-base font-medium transition-all">Financing</a>

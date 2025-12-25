@@ -1,6 +1,5 @@
 ---
 import '../styles/global.css';
-import LiveChat from '../components/LiveChat.astro';
 
 interface Props {
   title?: string;
@@ -65,9 +64,6 @@ const imageURL = Astro.site
   </head>
   <body class="min-h-screen bg-gray-50">
     <slot />
-    
-    <!-- Live Chat Widget -->
-    <LiveChat />
     
     <!-- Floating Action Buttons -->
     <div class="fixed bottom-6 right-6 flex flex-col gap-3 z-40">
